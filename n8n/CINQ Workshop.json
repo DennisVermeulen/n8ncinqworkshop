@@ -1,0 +1,336 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# 🎯 30-Minute Workshop Flow\n\n## Timing:\n- **0-5 min**: Introductie & Demo\n- **5-15 min**: Uitleg van elke node\n- **15-25 min**: Hands-on (wijzig RSS feed)\n- **25-30 min**: Q&A & Tips\n\n## Workshop Stappen:\n1. Start met Manual Trigger\n2. RSS Feed leest nieuws\n3. AI vat samen in Nederlands\n4. Output naar Slack/Email",
+        "height": 430,
+        "width": 400
+      },
+      "id": "b60bfa84-6321-4156-b0c0-9c536e67e093",
+      "name": "Workshop Info",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1660,
+        160
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "bba700a2-8411-42e4-a552-d8306d1bca15",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -1200,
+        260
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "https://feeds.feedburner.com/TheHackersNews",
+        "options": {
+          "ignoreSSL": false
+        }
+      },
+      "id": "935a7689-8776-40c6-bee5-5ce104811c60",
+      "name": "Tech News RSS",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -1000,
+        260
+      ],
+      "typeVersion": 1.1,
+      "notesInFlow": "Deelnemers kunnen deze URL wijzigen naar hun favoriete tech blog"
+    },
+    {
+      "parameters": {
+        "maxItems": 5
+      },
+      "id": "74ff4a07-0373-4447-9c89-f23f0ca421e2",
+      "name": "Top 5 Artikelen",
+      "type": "n8n-nodes-base.limit",
+      "position": [
+        -800,
+        260
+      ],
+      "typeVersion": 1,
+      "notesInFlow": "Beperkt tot 5 artikelen voor snelle verwerking"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "id": "c38d60bd-3804-4caa-ba44-9eeaaf7f0d9f",
+      "name": "Combineer Artikelen",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        -600,
+        260
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Je bent een tech nieuws expert die prachtige markdown samenvattingen maakt. Analyseer deze 5 nieuwsartikelen:\n\n{{ $json.data.map((item, index) => `${index + 1}. **${item.title}**\\n${item.contentSnippet || item.description}\\n`).join('\\n') }}\n\nMaak een gestructureerde Nederlandse samenvatting in markdown format:\n\n### 🎯 Top 3 Hoofdonderwerpen\n\nGeef voor elk hoofdonderwerp:\n- Een duidelijke **titel** met emoji\n- Een korte uitleg (max 2 zinnen)\n- Relevante artikel referentie(s)\n\n### 💡 Belangrijkste Inzichten\n\nNoem 2-3 belangrijke trends of ontwikkelingen die je ziet.\n\n### 🚀 Tech Tip van de Dag\n\nGeef een praktische tip gebaseerd op het nieuws.\n\n### 📌 One-liners\n\nGeef 3 korte bullet points met andere interessante nieuwtjes.\n\nGebruik markdown formatting zoals **bold**, *italic*, `code`, en > quotes waar relevant. Schrijf in het Nederlands en houd het beknopt maar informatief.",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -400,
+        260
+      ],
+      "id": "a12dcd1d-df0d-468c-b5fc-0ae43ac53336",
+      "name": "AI Samenvatting"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "summary-field",
+              "name": "daily_summary",
+              "type": "string",
+              "value": "=# 🚀 CINQ Tech Nieuws Digest\n\n## 📅 {{ $now.toFormat('dddd, d MMMM yyyy') }}\n*Laatste update: {{ $now.toFormat('HH:mm') }} uur*\n\n---\n\n## 📰 Vandaag in Tech\n\n{{ $json.text }}\n\n---\n\n## 📊 Statistieken\n- **Artikelen geanalyseerd:** 5\n- **Bronnen:** The Hacker News\n- **AI Model:** Ollama Gemma3n\n- **Verwerkt op:** {{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}\n\n---\n\n### 🔗 Links\n- [The Hacker News](https://thehackernews.com)\n- [CINQ-ICT](https://cinq-ict.nl)\n- [n8n Workflows](https://n8n.io)\n\n---\n\n*🤖 Automatisch gegenereerd door CINQ n8n Workshop*  \n*💡 Wil je je eigen RSS feeds toevoegen? Check de workshop documentatie!*"
+            },
+            {
+              "id": "timestamp-field",
+              "name": "timestamp",
+              "type": "string",
+              "value": "={{ $now.toISO() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2ee7e547-641b-496f-b87c-4f65e85ccafa",
+      "name": "Format Output",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -40,
+        260
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 🎉 Output Opties\n\nKies één van deze outputs:\n1. **Email**: Stuur naar jezelf\n2. **Slack**: Post in channel\n3. **Webhook**: Naar eigen app\n4. **File**: Sla op als Markdown\n\nVoor de workshop gebruiken we de Response node om het resultaat direct te zien!",
+        "height": 260,
+        "width": 300,
+        "color": 5
+      },
+      "id": "cb5ac21b-9de7-4b59-92ef-d6a3b54fdf21",
+      "name": "Output Opties",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -20,
+        -60
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "options": {
+          "format": "simple",
+          "simplifyOutput": true
+        }
+      },
+      "id": "28dfc63d-7829-4661-9815-3e5926e5587a",
+      "name": "Convert to Markdown",
+      "type": "n8n-nodes-base.convertToFile",
+      "position": [
+        160,
+        260
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ '/home/node/files/news-summary-' + $now.toFormat('yyyy-MM-dd_HH-mm-ss') + '.md' }}",
+        "dataPropertyName": "daily_summary",
+        "options": {}
+      },
+      "id": "5c8b6e86-682e-4ccc-89e2-edf8fdb671af",
+      "name": "Save as Markdown",
+      "type": "n8n-nodes-base.readWriteFile",
+      "position": [
+        400,
+        260
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 📝 Hands-on Opdrachten\n\n**Opdracht 1 (5 min):**\nWijzig de RSS feed naar:\n- https://www.nu.nl/rss/Tech\n- https://tweakers.net/feeds/nieuws.xml\n- Of je eigen favoriete tech blog!\n\n**Opdracht 2 (5 min):**\nPas de AI prompt aan:\n- Vraag om een Engels summary\n- Focus op security nieuws\n- Maak het formeler/informeler\n\n**Opdracht 3 (5 min):**\nVoeg een filter toe:\n- Alleen artikelen van vandaag\n- Alleen met bepaalde keywords\n- Sorteer op relevantie",
+        "height": 460,
+        "width": 350,
+        "color": 6
+      },
+      "id": "7632d8be-eaaa-48e7-8fd2-2ab0ccd807da",
+      "name": "Hands-on Taken",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1200,
+        520
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## ⚡ Quick Tips\n\n1. **Test snel**: Gebruik Manual Trigger\n2. **Debug**: Klik op nodes voor output\n3. **AI Kosten**: GPT-3.5 is goedkoper\n4. **Foutafhandeling**: Voeg try-catch toe\n5. **Scheduling**: Upgrade naar cron\n6. **Ollama Chat Model**: http://host.docker.internal:11434\n\n## 🔗 Nuttige Links\n- n8n Docs: docs.n8n.io\n- RSS Feeds: github.com/plenaryapp/awesome-rss-feeds\n- Workshop Repo: [jouw-github-link]",
+        "height": 410,
+        "width": 350,
+        "color": 7
+      },
+      "id": "e69fc295-c0db-4dc2-86f8-825e6449a569",
+      "name": "Tips & Links",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -600,
+        520
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "model": "gemma3n:latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        540
+      ],
+      "id": "64d1e3ef-8796-49c6-a166-1274d97dd48c",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "l4Z0Tbur9R5CdxEh",
+          "name": "Ollama account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Tech News RSS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tech News RSS": {
+      "main": [
+        [
+          {
+            "node": "Top 5 Artikelen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Top 5 Artikelen": {
+      "main": [
+        [
+          {
+            "node": "Combineer Artikelen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combineer Artikelen": {
+      "main": [
+        [
+          {
+            "node": "AI Samenvatting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Samenvatting": {
+      "main": [
+        [
+          {
+            "node": "Format Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Output": {
+      "main": [
+        [
+          {
+            "node": "Convert to Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to Markdown": {
+      "main": [
+        [
+          {
+            "node": "Save as Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Samenvatting",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a4ea8b07-c059-48e2-ae25-afc673a3f92d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "39c9413ece1adda0cefabd302ba6bf5aaa01d1aa6598a9bbdb7282693369fc48"
+  },
+  "id": "l4NY7pdycZ2qMmPh",
+  "tags": [
+    {
+      "name": "workshop",
+      "id": "HicNLWK89oM4izMA",
+      "createdAt": "2025-07-09T14:35:14.399Z",
+      "updatedAt": "2025-07-09T14:35:14.399Z"
+    },
+    {
+      "name": "30-minutes",
+      "id": "KYT5RhsWu3uon7fr",
+      "createdAt": "2025-07-09T14:35:14.395Z",
+      "updatedAt": "2025-07-09T14:35:14.395Z"
+    }
+  ]
+}
