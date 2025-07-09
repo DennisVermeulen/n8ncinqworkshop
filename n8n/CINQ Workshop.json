@@ -1,5 +1,5 @@
 {
-  "name": "My workflow",
+  "name": "CINQ n8n Workshop",
   "nodes": [
     {
       "parameters": {
@@ -7,23 +7,23 @@
         "height": 430,
         "width": 400
       },
-      "id": "b60bfa84-6321-4156-b0c0-9c536e67e093",
+      "id": "7d298ef8-875c-4069-bb26-c82c23399d17",
       "name": "Workshop Info",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1660,
-        160
+        -1640,
+        220
       ],
       "typeVersion": 1
     },
     {
       "parameters": {},
-      "id": "bba700a2-8411-42e4-a552-d8306d1bca15",
+      "id": "f6c4825a-b467-4cd9-bdc2-8a27e1694c5e",
       "name": "Manual Trigger",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -1200,
-        260
+        -1180,
+        320
       ],
       "typeVersion": 1
     },
@@ -34,12 +34,12 @@
           "ignoreSSL": false
         }
       },
-      "id": "935a7689-8776-40c6-bee5-5ce104811c60",
+      "id": "5fa4e83f-c34b-4f7f-9e53-0d8d985043c0",
       "name": "Tech News RSS",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        -1000,
-        260
+        -980,
+        320
       ],
       "typeVersion": 1.1,
       "notesInFlow": "Deelnemers kunnen deze URL wijzigen naar hun favoriete tech blog"
@@ -48,12 +48,12 @@
       "parameters": {
         "maxItems": 5
       },
-      "id": "74ff4a07-0373-4447-9c89-f23f0ca421e2",
+      "id": "b8b1ec7d-a058-48c0-a3b0-a4464520b72f",
       "name": "Top 5 Artikelen",
       "type": "n8n-nodes-base.limit",
       "position": [
-        -800,
-        260
+        -780,
+        320
       ],
       "typeVersion": 1,
       "notesInFlow": "Beperkt tot 5 artikelen voor snelle verwerking"
@@ -63,12 +63,12 @@
         "aggregate": "aggregateAllItemData",
         "options": {}
       },
-      "id": "c38d60bd-3804-4caa-ba44-9eeaaf7f0d9f",
+      "id": "94cbc7ce-4642-4a84-a51b-4a7e27546422",
       "name": "Combineer Artikelen",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        -600,
-        260
+        -580,
+        320
       ],
       "typeVersion": 1
     },
@@ -81,10 +81,10 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        -400,
-        260
+        -380,
+        320
       ],
-      "id": "a12dcd1d-df0d-468c-b5fc-0ae43ac53336",
+      "id": "0a0a14da-a1e0-460d-a68a-d09f567e3c98",
       "name": "AI Samenvatting"
     },
     {
@@ -95,7 +95,7 @@
               "id": "summary-field",
               "name": "daily_summary",
               "type": "string",
-              "value": "=# 🚀 CINQ Tech Nieuws Digest\n\n## 📅 {{ $now.toFormat('dddd, d MMMM yyyy') }}\n*Laatste update: {{ $now.toFormat('HH:mm') }} uur*\n\n---\n\n## 📰 Vandaag in Tech\n\n{{ $json.text }}\n\n---\n\n## 📊 Statistieken\n- **Artikelen geanalyseerd:** 5\n- **Bronnen:** The Hacker News\n- **AI Model:** Ollama Gemma3n\n- **Verwerkt op:** {{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}\n\n---\n\n### 🔗 Links\n- [The Hacker News](https://thehackernews.com)\n- [CINQ-ICT](https://cinq-ict.nl)\n- [n8n Workflows](https://n8n.io)\n\n---\n\n*🤖 Automatisch gegenereerd door CINQ n8n Workshop*  \n*💡 Wil je je eigen RSS feeds toevoegen? Check de workshop documentatie!*"
+              "value": "=# 🚀 CINQ Tech Nieuws Digest\n\n## 📅 {{ $now.toFormat('dddd, d MMMM yyyy') }}\n*Laatste update: {{ $now.toFormat('HH:mm') }} uur*\n\n---\n\n## 📰 Vandaag in Tech\n\n{{ $json.text }}\n\n---\n\n## 📊 Statistieken\n- **Artikelen geanalyseerd:** 5\n- **Bronnen:** The Hacker News\n- **AI Model:** Ollama Gemma3n\n- **Verwerkt op:** {{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}\n\n---\n\n### 🔗 Links\n- [The Hacker News](https://thehackernews.com)\n- [CINQ-ICT](https://www.cinqict.nl/)\n- [n8n Workflows](https://n8n.io)\n\n---\n\n*🤖 Automatisch gegenereerd door CINQ n8n Workshop*  \n*💡 Wil je je eigen RSS feeds toevoegen? Check de workshop documentatie!*"
             },
             {
               "id": "timestamp-field",
@@ -107,12 +107,12 @@
         },
         "options": {}
       },
-      "id": "2ee7e547-641b-496f-b87c-4f65e85ccafa",
+      "id": "ba47e9fe-c772-41bf-bac5-87e763df9372",
       "name": "Format Output",
       "type": "n8n-nodes-base.set",
       "position": [
-        -40,
-        260
+        -20,
+        320
       ],
       "typeVersion": 3.4
     },
@@ -123,29 +123,27 @@
         "width": 300,
         "color": 5
       },
-      "id": "cb5ac21b-9de7-4b59-92ef-d6a3b54fdf21",
+      "id": "c9249e9e-2e78-4234-8dad-c272387981bf",
       "name": "Output Opties",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -20,
-        -60
+        0,
+        0
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
         "operation": "toText",
-        "options": {
-          "format": "simple",
-          "simplifyOutput": true
-        }
+        "sourceProperty": "daily_summary",
+        "options": {}
       },
-      "id": "28dfc63d-7829-4661-9815-3e5926e5587a",
+      "id": "a2d646e1-4c92-42c5-bbfd-05634389c3b5",
       "name": "Convert to Markdown",
       "type": "n8n-nodes-base.convertToFile",
       "position": [
-        160,
-        260
+        180,
+        320
       ],
       "typeVersion": 1.1
     },
@@ -153,15 +151,14 @@
       "parameters": {
         "operation": "write",
         "fileName": "={{ '/home/node/files/news-summary-' + $now.toFormat('yyyy-MM-dd_HH-mm-ss') + '.md' }}",
-        "dataPropertyName": "daily_summary",
         "options": {}
       },
-      "id": "5c8b6e86-682e-4ccc-89e2-edf8fdb671af",
+      "id": "abf42050-52f2-401f-b937-fbe16f8b0318",
       "name": "Save as Markdown",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        400,
-        260
+        420,
+        320
       ],
       "typeVersion": 1
     },
@@ -172,12 +169,12 @@
         "width": 350,
         "color": 6
       },
-      "id": "7632d8be-eaaa-48e7-8fd2-2ab0ccd807da",
+      "id": "d04f5ba3-8311-4f3a-86f0-0105d70ce736",
       "name": "Hands-on Taken",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1200,
-        520
+        -1180,
+        580
       ],
       "typeVersion": 1
     },
@@ -188,12 +185,12 @@
         "width": 350,
         "color": 7
       },
-      "id": "e69fc295-c0db-4dc2-86f8-825e6449a569",
+      "id": "1afd5d95-542f-4b52-81c4-c6bd2e706f23",
       "name": "Tips & Links",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -600,
-        520
+        -580,
+        580
       ],
       "typeVersion": 1
     },
@@ -205,10 +202,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        -100,
-        540
+        -80,
+        600
       ],
-      "id": "64d1e3ef-8796-49c6-a166-1274d97dd48c",
+      "id": "42f8cc49-17f6-4363-83f2-128f545b09c6",
       "name": "Ollama Chat Model",
       "credentials": {
         "ollamaApi": {
@@ -313,12 +310,11 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "a4ea8b07-c059-48e2-ae25-afc673a3f92d",
+  "versionId": "9b76f4b2-979e-4920-a5b4-47316649dede",
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "39c9413ece1adda0cefabd302ba6bf5aaa01d1aa6598a9bbdb7282693369fc48"
   },
-  "id": "l4NY7pdycZ2qMmPh",
+  "id": "3HaNqu2yZKaS2VfL",
   "tags": [
     {
       "name": "workshop",
