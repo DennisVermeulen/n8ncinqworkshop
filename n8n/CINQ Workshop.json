@@ -3,7 +3,7 @@
   "nodes": [
     {
       "parameters": {
-        "content": "# 🎯 30-Minute Workshop Flow\n\n## Timing:\n- **0-5 min**: Introductie & Demo\n- **5-15 min**: Uitleg van elke node\n- **15-25 min**: Hands-on (wijzig RSS feed)\n- **25-30 min**: Q&A & Tips\n\n## Workshop Stappen:\n1. Start met Manual Trigger\n2. RSS Feed leest nieuws\n3. AI vat samen in Nederlands\n4. Output naar Slack/Email",
+        "content": "# 🎯 30-Minute Workshop Flow\n\n## Timing:\n- **0-5 min**: Introduction & Demo\n- **5-15 min**: Explanation of each node\n- **15-25 min**: Hands-on (modify RSS feed)\n- **25-30 min**: Q&A & Tips\n\n## Workshop Steps:\n1. Start with Manual Trigger\n2. RSS Feed reads news\n3. AI summarizes\n4. Output to Slack/Email",
         "height": 430,
         "width": 400
       },
@@ -42,21 +42,21 @@
         320
       ],
       "typeVersion": 1.1,
-      "notesInFlow": "Deelnemers kunnen deze URL wijzigen naar hun favoriete tech blog"
+      "notesInFlow": "Participants can change this URL to their favorite tech blog"
     },
     {
       "parameters": {
         "maxItems": 5
       },
       "id": "b8b1ec7d-a058-48c0-a3b0-a4464520b72f",
-      "name": "Top 5 Artikelen",
+      "name": "Top 5 Articles",
       "type": "n8n-nodes-base.limit",
       "position": [
         -780,
         320
       ],
       "typeVersion": 1,
-      "notesInFlow": "Beperkt tot 5 artikelen voor snelle verwerking"
+      "notesInFlow": "Limited to 5 articles for fast processing"
     },
     {
       "parameters": {
@@ -64,7 +64,7 @@
         "options": {}
       },
       "id": "94cbc7ce-4642-4a84-a51b-4a7e27546422",
-      "name": "Combineer Artikelen",
+      "name": "Combine Articles",
       "type": "n8n-nodes-base.aggregate",
       "position": [
         -580,
@@ -75,7 +75,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Je bent een tech nieuws expert die prachtige markdown samenvattingen maakt. Analyseer deze 5 nieuwsartikelen:\n\n{{ $json.data.map((item, index) => `${index + 1}. **${item.title}**\\n${item.contentSnippet || item.description}\\n`).join('\\n') }}\n\nMaak een gestructureerde Nederlandse samenvatting in markdown format:\n\n### 🎯 Top 3 Hoofdonderwerpen\n\nGeef voor elk hoofdonderwerp:\n- Een duidelijke **titel** met emoji\n- Een korte uitleg (max 2 zinnen)\n- Relevante artikel referentie(s)\n\n### 💡 Belangrijkste Inzichten\n\nNoem 2-3 belangrijke trends of ontwikkelingen die je ziet.\n\n### 🚀 Tech Tip van de Dag\n\nGeef een praktische tip gebaseerd op het nieuws.\n\n### 📌 One-liners\n\nGeef 3 korte bullet points met andere interessante nieuwtjes.\n\nGebruik markdown formatting zoals **bold**, *italic*, `code`, en > quotes waar relevant. Schrijf in het Nederlands en houd het beknopt maar informatief.",
+        "text": "=You are a tech news expert who creates beautiful markdown summaries. Analyze these 5 news articles:\n\n{{ $json.data.map((item, index) => `${index + 1}. **${item.title}**\\n${item.contentSnippet || item.description}\\n`).join('\\n') }}\n\nCreate a structured summary in markdown format:\n\n### 🎯 Top 3 Main Topics\n\nFor each main topic provide:\n- A clear **title** with emoji\n- A brief explanation (max 2 sentences)\n- Relevant article reference(s)\n\n### 💡 Key Insights\n\nMention 2-3 important trends or developments you see.\n\n### 🚀 Tech Tip of the Day\n\nProvide a practical tip based on the news.\n\n### 📌 One-liners\n\nGive 3 short bullet points with other interesting news.\n\nUse markdown formatting like **bold**, *italic*, `code`, and > quotes where relevant. Keep it concise but informative.",
         "batching": {}
       },
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
@@ -85,7 +85,7 @@
         320
       ],
       "id": "0a0a14da-a1e0-460d-a68a-d09f567e3c98",
-      "name": "AI Samenvatting"
+      "name": "AI Summary"
     },
     {
       "parameters": {
@@ -95,7 +95,7 @@
               "id": "summary-field",
               "name": "daily_summary",
               "type": "string",
-              "value": "=# 🚀 CINQ Tech Nieuws Digest\n\n## 📅 {{ $now.toFormat('dddd, d MMMM yyyy') }}\n*Laatste update: {{ $now.toFormat('HH:mm') }} uur*\n\n---\n\n## 📰 Vandaag in Tech\n\n{{ $json.text }}\n\n---\n\n## 📊 Statistieken\n- **Artikelen geanalyseerd:** 5\n- **Bronnen:** The Hacker News\n- **AI Model:** Ollama Gemma3n\n- **Verwerkt op:** {{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}\n\n---\n\n### 🔗 Links\n- [The Hacker News](https://thehackernews.com)\n- [CINQ-ICT](https://www.cinqict.nl/)\n- [n8n Workflows](https://n8n.io)\n\n---\n\n*🤖 Automatisch gegenereerd door CINQ n8n Workshop*  \n*💡 Wil je je eigen RSS feeds toevoegen? Check de workshop documentatie!*"
+              "value": "=# 🚀 CINQ Tech News Digest\n\n## 📅 {{ $now.toFormat('dddd, d MMMM yyyy') }}\n*Last update: {{ $now.toFormat('HH:mm') }}*\n\n---\n\n## 📰 Today in Tech\n\n{{ $json.text }}\n\n---\n\n## 📊 Statistics\n- **Articles analyzed:** 5\n- **Sources:** The Hacker News\n- **AI Model:** Ollama Gemma3n\n- **Processed on:** {{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}\n\n---\n\n### 🔗 Links\n- [The Hacker News](https://thehackernews.com)\n- [CINQ-ICT](https://www.cinqict.nl/)\n- [n8n Workflows](https://n8n.io)\n\n---\n\n*🤖 Automatically generated by CINQ n8n Workshop*  \n*💡 Want to add your own RSS feeds? Check the workshop documentation!*"
             },
             {
               "id": "timestamp-field",
@@ -118,13 +118,13 @@
     },
     {
       "parameters": {
-        "content": "## 🎉 Output Opties\n\nKies één van deze outputs:\n1. **Email**: Stuur naar jezelf\n2. **Slack**: Post in channel\n3. **Webhook**: Naar eigen app\n4. **File**: Sla op als Markdown\n\nVoor de workshop gebruiken we de Response node om het resultaat direct te zien!",
+        "content": "## 🎉 Output Options\n\nChoose one of these outputs:\n1. **Email**: Send to yourself\n2. **Slack**: Post in channel\n3. **Webhook**: To your own app\n4. **File**: Save as Markdown\n\nFor the workshop we use the Response node to see the result directly!",
         "height": 260,
         "width": 300,
         "color": 5
       },
       "id": "c9249e9e-2e78-4234-8dad-c272387981bf",
-      "name": "Output Opties",
+      "name": "Output Options",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         0,
@@ -164,13 +164,13 @@
     },
     {
       "parameters": {
-        "content": "## 📝 Hands-on Opdrachten\n\n**Opdracht 1 (5 min):**\nWijzig de RSS feed naar:\n- https://www.nu.nl/rss/Tech\n- https://tweakers.net/feeds/nieuws.xml\n- Of je eigen favoriete tech blog!\n\n**Opdracht 2 (5 min):**\nPas de AI prompt aan:\n- Vraag om een Engels summary\n- Focus op security nieuws\n- Maak het formeler/informeler\n\n**Opdracht 3 (5 min):**\nVoeg een filter toe:\n- Alleen artikelen van vandaag\n- Alleen met bepaalde keywords\n- Sorteer op relevantie",
+        "content": "## 📝 Hands-on Assignments\n\n**Assignment 1 (5 min):**\nChange the RSS feed to:\n- https://techcrunch.com/feed/\n- https://feeds.arstechnica.com/arstechnica/index\n- Or your own favorite tech blog!\n\n**Assignment 2 (5 min):**\nCustomize the AI prompt:\n- Ask for a summary in another language\n- Focus on security news\n- Make it more formal/informal\n\n**Assignment 3 (5 min):**\nAdd a filter:\n- Only today's articles\n- Only with certain keywords\n- Sort by relevance",
         "height": 460,
         "width": 350,
         "color": 6
       },
       "id": "d04f5ba3-8311-4f3a-86f0-0105d70ce736",
-      "name": "Hands-on Taken",
+      "name": "Hands-on Tasks",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -1180,
@@ -180,7 +180,7 @@
     },
     {
       "parameters": {
-        "content": "## ⚡ Quick Tips\n\n1. **Test snel**: Gebruik Manual Trigger\n2. **Debug**: Klik op nodes voor output\n3. **AI Kosten**: GPT-3.5 is goedkoper\n4. **Foutafhandeling**: Voeg try-catch toe\n5. **Scheduling**: Upgrade naar cron\n6. **Ollama Chat Model**: http://host.docker.internal:11434\n\n## 🔗 Nuttige Links\n- n8n Docs: docs.n8n.io\n- RSS Feeds: github.com/plenaryapp/awesome-rss-feeds\n- Workshop Repo: [jouw-github-link]",
+        "content": "## ⚡ Quick Tips\n\n1. **Test quickly**: Use Manual Trigger\n2. **Debug**: Click on nodes for output\n3. **AI Costs**: GPT-3.5 is cheaper\n4. **Error handling**: Add try-catch\n5. **Scheduling**: Upgrade to cron\n6. **Ollama Chat Model**: http://host.docker.internal:11434\n\n## 🔗 Useful Links\n- n8n Docs: docs.n8n.io\n- RSS Feeds: github.com/plenaryapp/awesome-rss-feeds\n- Workshop Repo: [your-github-link]",
         "height": 410,
         "width": 350,
         "color": 7
