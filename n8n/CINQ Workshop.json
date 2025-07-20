@@ -75,7 +75,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are a tech news expert who creates beautiful markdown summaries. Analyze these 5 news articles:\n\n{{ $json.data.map((item, index) => `${index + 1}. **${item.title}**\\n${item.contentSnippet || item.description}\\n`).join('\\n') }}\n\nCreate a structured summary in markdown format:\n\n### 🎯 Top 3 Main Topics\n\nFor each main topic provide:\n- A clear **title** with emoji\n- A brief explanation (max 2 sentences)\n- Relevant article reference(s)\n\n### 💡 Key Insights\n\nMention 2-3 important trends or developments you see.\n\n### 🚀 Tech Tip of the Day\n\nProvide a practical tip based on the news.\n\n### 📌 One-liners\n\nGive 3 short bullet points with other interesting news.\n\nUse markdown formatting like **bold**, *italic*, `code`, and > quotes where relevant. Keep it concise but informative.",
+        "text": "=You are a tech news expert who creates beautiful markdown summaries. Analyze these 5 news articles:\n\n{{ $json.data.map((item, index) => `${index + 1}. **${item.title}**\\n${item.contentSnippet || item.description}\\nURL: ${item.link}\\n`).join('\\n') }}\n\nCreate a structured summary in markdown format:\n\n### 🎯 Top 3 Main Topics\n\nFor each main topic provide:\n- A clear **title** with emoji\n- A brief explanation (max 2 sentences)\n- Include the actual article link(s) as markdown links: [Article Title](URL)\n\n### 💡 Key Insights\n\nMention 2-3 important trends or developments you see.\nInclude links to relevant articles.\n\n### 🚀 Tech Tip of the Day\n\nProvide a practical tip based on the news.\n\n### 📌 One-liners\n\nGive 3 short bullet points with other interesting news.\nInclude links where relevant.\n\nIMPORTANT: Always include actual article URLs as clickable markdown links throughout your summary. Use format: [Title](URL)\n\nUse markdown formatting like **bold**, *italic*, `code`, and > quotes where relevant. Keep it concise but informative.",
         "batching": {}
       },
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
@@ -232,36 +232,36 @@
       "main": [
         [
           {
-            "node": "Top 5 Artikelen",
+            "node": "Top 5 Articles",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Top 5 Artikelen": {
+    "Top 5 Articles": {
       "main": [
         [
           {
-            "node": "Combineer Artikelen",
+            "node": "Combine Articles",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Combineer Artikelen": {
+    "Combine Articles": {
       "main": [
         [
           {
-            "node": "AI Samenvatting",
+            "node": "AI Summary",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "AI Samenvatting": {
+    "AI Summary": {
       "main": [
         [
           {
@@ -298,7 +298,7 @@
       "ai_languageModel": [
         [
           {
-            "node": "AI Samenvatting",
+            "node": "AI Summary",
             "type": "ai_languageModel",
             "index": 0
           }
