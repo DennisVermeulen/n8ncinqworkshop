@@ -12,7 +12,7 @@ Participants learn to build a practical n8n workflow in 30 minutes that reads RS
 ✅ "Welcome! Today we're building an AI News Bot together"
 ✅ Show end result (1 min demo)
 ✅ "From RSS feed to AI summary in 5 nodes"
-✅ Check: Everyone has n8n open? → /CINQ_Workshop_30min.json imported?
+✅ Check: Everyone has n8n open? → /n8n/CINQ n8n workshop.json imported?
 ```
 
 ### **[5-15 min] Step-by-Step Explanation**
@@ -54,7 +54,7 @@ Participants learn to build a practical n8n workflow in 30 minutes that reads RS
 ```
 "Choose a different RSS feed:"
 Option A: https://techcrunch.com/feed/ (Tech news)
-Option B: https://feeds.arstechnica.com/arstechnica/index (Ars Technica)
+Option B: https://www.bright.nl/feed/news.xml?tag=AI (Bright)
 Option C: Your own choice!
 
 → Help people who get stuck
